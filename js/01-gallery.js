@@ -2,10 +2,12 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 console.log(galleryItems);
 
+let instance;
 const galleryContainer = document.querySelector('.gallery');
 galleryContainer.innerHTML = createGalleryMarkup(galleryItems);
 
 galleryContainer.addEventListener('click', onGalleryClick);
+galleryContainer.addEventListener('keydown', onGalleryEscKeyDown);
 
 function createGalleryMarkup(images) {
   return images
@@ -30,10 +32,17 @@ function onGalleryClick(e) {
   if (e.target === e.currentTarget) {
     return;
   }
-
-  const instance = basicLightbox.create(`
+  instance = basicLightbox.create(`
     <img src=${e.target.dataset.source} width="1280">
 `);
-
   instance.show();
+}
+
+function onGalleryEscKeyDown(e) {
+  const visible = basicLightbox.visible();
+  if (!visible) {
+    return;
+  } else if (e.code === 'Escape') {
+    instance.close();
+  }
 }
