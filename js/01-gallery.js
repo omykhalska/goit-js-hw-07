@@ -40,9 +40,7 @@ function onGalleryClick(e) {
 
 function onGalleryEscKeyDown(e) {
   const visible = basicLightbox.visible();
-  if (!visible) {
-    return;
-  } else if (e.code === 'Escape') {
+  if (visible && e.code === 'Escape') {
     instance.close();
   }
 }
